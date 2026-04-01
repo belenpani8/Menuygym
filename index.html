@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Completo – Belén</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow:       #f5c842;
+    --yellow-light: #fef7d6;
+    --yellow-dark:  #c49a10;
+    --yellow-mid:   #f0b800;
+    --cream:        #fdfaf0;
+    --charcoal:     #2a2a2a;
+    --text:         #333;
+    --text-light:   #777;
+    --white:        #fff;
+    --green:        #5a7a58;
+    --green-light:  #c8d8c4;
+    --lilac:        #c9b8d4;
+    --lilac-light:  #ede5f3;
+    --warm:         #e8935a;
+    --warm-light:   #faeade;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+  }
+
+  /* ══ MAIN NAV ══ */
+  .main-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--charcoal);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .main-nav button {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  .main-nav button.active,
+  .main-nav button:hover {
+    color: var(--yellow);
+    border-bottom-color: var(--yellow);
+  }
+
+  /* ══ MAIN SECTIONS ══ */
+  .main-section { display: none; }
+  .main-section.active { display: block; }
+
+  /* ══ SHARED HEADER ══ */
+  .page-header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #3a3a2a 60%, #4a4010 100%);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    background: rgba(245,200,66,0.08);
+    border-radius: 50%;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 300px; height: 300px;
+    background: rgba(245,200,66,0.05);
+    border-radius: 50%;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--yellow);
+    margin-bottom: 0.4rem;
+    position: relative;
+  }
+  .page-header p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.88rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .tag-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .tag {
+    background: rgba(245,200,66,0.18);
+    color: var(--yellow);
+    border: 1px solid rgba(245,200,66,0.35);
+    border-radius: 20px;
+    padding: 0.22rem 0.85rem;
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ══ MONTH TABS ══ */
+  .month-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem 0;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: var(--white);
+    border: 2px solid var(--yellow);
+    border-radius: 30px;
+    padding: 0.5rem 1.4rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--yellow-dark);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--charcoal);
+  }
+
+  /* ══ MONTH SECTION ══ */
+  .month-section { display: none; padding: 1.5rem 1rem 3rem; max-width: 920px; margin: 0 auto; }
+  .month-section.active { display: block; }
+
+  .month-header {
+    text-align: center;
+    margin-bottom: 1.4rem;
+  }
+  .month-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--charcoal);
+  }
+  .month-header h2 span { color: var(--yellow-dark); }
+  .month-header p {
+    color: var(--text-light);
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
+  }
+
+  /* ══ MENU CARDS ══ */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1rem;
+  }
+  .day-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .day-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.11);
+  }
+  .day-header {
+    padding: 0.7rem 1rem;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .day-header.y1 { background: var(--yellow); color: var(--charcoal); }
+  .day-header.y2 { background: var(--yellow-dark); color: var(--white); }
+  .day-header.y3 { background: var(--charcoal); color: var(--yellow); }
+
+  .meal-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.52rem 1rem;
+    border-bottom: 1px solid #f5f0e0;
+    gap: 0.6rem;
+  }
+  .meal-row:last-child { border-bottom: none; }
+  .meal-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--yellow-dark);
+    min-width: 64px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .meal-text {
+    font-size: 0.81rem;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .meal-text span {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.74rem;
+  }
+
+  /* ══ TIPS BOX ══ */
+  .tips-box {
+    background: var(--yellow-light);
+    border-left: 4px solid var(--yellow);
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.2rem;
+    margin-top: 1.4rem;
+  }
+  .tips-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--charcoal);
+    margin-bottom: 0.5rem;
+  }
+  .tips-box ul { list-style: none; }
+  .tips-box ul li {
+    font-size: 0.8rem;
+    color: var(--text);
+    padding: 0.22rem 0 0.22rem 1.1rem;
+    position: relative;
+    line-height: 1.4;
+  }
+  .tips-box ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--yellow-dark);
+    font-size: 0.6rem;
+    top: 0.35rem;
+  }
+
+  /* ══ GYM SECTION ══ */
+  .objetivo-banner {
+    background: var(--white);
+    margin: 1.5rem auto;
+    border-radius: 16px;
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    max-width: 860px;
+  }
+  .obj-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .obj-label { font-weight: 600; }
+  .obj-val { color: var(--text-light); }
+
+  .phase-box {
+    background: linear-gradient(120deg, var(--charcoal), #3a3a2a);
+    border-radius: 14px;
+    padding: 1rem 1.3rem;
+    color: var(--white);
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    border-left: 5px solid var(--yellow);
+  }
+  .phase-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--yellow);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+  .phase-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--yellow); }
+  .phase-info p { font-size: 0.8rem; opacity: 0.85; line-height: 1.45; }
+
+  .week-sched {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .week-sched h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--yellow-dark);
+    margin-bottom: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .day-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .day-pill {
+    border-radius: 20px;
+    padding: 0.25rem 0.85rem;
+    font-size: 0.74rem;
+    font-weight: 600;
+  }
+  .day-pill.gym { background: var(--yellow); color: var(--charcoal); }
+  .day-pill.rest { background: #f0f0f0; color: var(--text-light); }
+  .day-pill.opt  { background: var(--warm-light); color: var(--warm); border: 1px solid var(--warm); }
+
+  .cardio-pill {
+    background: var(--yellow-light);
+    border-left: 3px solid var(--yellow);
+    border-radius: 0 10px 10px 0;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .cardio-pill strong { color: var(--yellow-dark); }
+
+  .progress-strip {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+  .prog-item {
+    background: var(--white);
+    border: 2px solid var(--yellow);
+    border-radius: 10px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+    text-align: center;
+    min-width: 90px;
+  }
+  .prog-item .pi-val {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--yellow-dark);
+    display: block;
+  }
+  .prog-item .pi-label { color: var(--text-light); }
+
+  /* ══ SESSION CARDS ══ */
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .session-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .session-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.11);
+  }
+  .session-header {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .session-header.sa { background: var(--yellow); color: var(--charcoal); }
+  .session-header.sb { background: var(--charcoal); color: var(--yellow); }
+  .s-title { font-weight: 700; font-size: 0.86rem; }
+  .s-badge {
+    margin-left: auto;
+    background: rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 0.1rem 0.6rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .session-header.sa .s-badge { background: rgba(0,0,0,0.1); color: var(--charcoal); }
+
+  .session-body { padding: 0.6rem 0.8rem; }
+
+  .block-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--yellow-dark);
+    padding: 0.5rem 0.2rem 0.2rem;
+  }
+
+  /* ══ EXERCISE ROW WITH IMAGE ══ */
+  .exercise-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.5rem 0.2rem;
+    border-bottom: 1px solid #f5f0e0;
+    cursor: pointer;
+  }
+  .exercise-row:last-child { border-bottom: none; }
+  .exercise-row:hover { background: var(--yellow-light); border-radius: 8px; }
+
+  .ex-num {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--yellow-dark);
+    min-width: 18px;
+    padding-top: 3px;
+    flex-shrink: 0;
+  }
+
+  /* image thumbnail */
+  .ex-img {
+    width: 54px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid #eee;
+    background: #f5f0e0;
+  }
+  .ex-img-placeholder {
+    width: 54px;
+    height: 40px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: var(--yellow-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .ex-info { flex: 1; min-width: 0; }
+  .ex-name { font-size: 0.83rem; font-weight: 600; color: var(--text); }
+  .ex-detail { font-size: 0.73rem; color: var(--text-light); margin-top: 1px; }
+  .ex-alt { font-size: 0.7rem; color: var(--yellow-dark); margin-top: 1px; font-style: italic; }
+
+  /* modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 480px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-header {
+    background: var(--yellow);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 { font-size: 1rem; font-weight: 700; color: var(--charcoal); }
+  .modal-close {
+    background: rgba(0,0,0,0.12);
+    border: none;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--charcoal);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-img {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+  }
+  .modal-body { padding: 1rem 1.2rem; }
+  .modal-body .m-sets { font-size: 0.9rem; font-weight: 600; color: var(--yellow-dark); margin-bottom: 0.4rem; }
+  .modal-body .m-desc { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+  .modal-body .m-alt {
+    margin-top: 0.6rem;
+    background: var(--yellow-light);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--yellow-dark);
+  }
+  .modal-body .m-alt strong { display: block; margin-bottom: 0.2rem; }
+
+  /* ══ MACHINE GUIDE ══ */
+  .machine-guide {
+    max-width: 920px;
+    margin: 0 auto 0.5rem;
+    padding: 0 1rem;
+  }
+  .machine-guide-toggle {
+    width: 100%;
+    background: var(--yellow);
+    border: none;
+    border-radius: 12px;
+    padding: 0.85rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+  }
+  .machine-guide-toggle:hover { background: var(--yellow-mid); }
+  .machine-guide-toggle .toggle-arrow { font-size: 1rem; transition: transform 0.25s; }
+  .machine-guide-toggle.open .toggle-arrow { transform: rotate(180deg); }
+
+  .machine-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .machine-grid.open { display: grid; }
+
+  .machine-card {
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border-top: 3px solid var(--yellow);
+  }
+  .machine-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: var(--yellow-light);
+    display: block;
+  }
+  .machine-info { padding: 0.75rem 0.9rem; }
+  .machine-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.2rem;
+  }
+  .machine-desc {
+    font-size: 0.76rem;
+    color: var(--text-light);
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+  }
+  .machine-used {
+    font-size: 0.72rem;
+    background: var(--yellow-light);
+    color: var(--yellow-dark);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  /* ══ IMPROVED EXERCISE ROW ══ */
+  .exercise-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.6rem 0.4rem;
+    border-bottom: 1px solid #f5f0e0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .exercise-row:last-child { border-bottom: none; }
+  .exercise-row:hover { background: var(--yellow-light); }
+
+  .ex-machine-img {
+    width: 72px;
+    height: 54px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--yellow-light);
+    background: var(--yellow-light);
+  }
+  .ex-machine-emoji {
+    width: 72px;
+    height: 54px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: var(--yellow-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    border: 2px solid var(--yellow-light);
+  }
+  .tap-hint {
+    font-size: 0.68rem;
+    color: var(--yellow-dark);
+    font-style: italic;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  @media (max-width: 520px) {
+    .page-header h1 { font-size: 1.5rem; }
+    .week-grid, .sessions-grid { grid-template-columns: 1fr; }
+    .main-nav button { padding: 0.8rem 1rem; font-size: 0.78rem; }
+    .machine-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="exModal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalTitle">Ejercicio</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <img id="modalImg" class="modal-img" src="" alt="" onerror="this.style.display='none'">
+    <div class="modal-body">
+      <div class="m-sets" id="modalSets"></div>
+      <div class="m-desc" id="modalDesc"></div>
+      <div class="m-alt" id="modalAlt"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN NAV ══ -->
+<nav class="main-nav">
+  <button class="active" onclick="showMain('menu')">🍽 Menú</button>
+  <button onclick="showMain('gym')">💪 Gym</button>
+</nav>
+
+<!-- ══════════════════════════════════ -->
+<!-- ══        SECCIÓN MENÚ          ══ -->
+<!-- ══════════════════════════════════ -->
+<div class="main-section active" id="main-menu">
+
+  <div class="page-header">
+    <h1>Plan de Menú · 3 Meses</h1>
+    <p>Belén García Paniagua · Reducción de grasa corporal</p>
+    <div class="tag-row">
+      <span class="tag">🐟 Pescado y marisco</span>
+      <span class="tag">🍄 Verduras y setas</span>
+      <span class="tag">🥑 Saciante</span>
+      <span class="tag">↓ Pan reducido</span>
+    </div>
+  </div>
+
+  <div class="month-tabs">
+    <button class="tab-btn active" onclick="showTab('menu',1)">Mes 1</button>
+    <button class="tab-btn" onclick="showTab('menu',2)">Mes 2</button>
+    <button class="tab-btn" onclick="showTab('menu',3)">Mes 3</button>
+  </div>
+
+  <!-- MENÚ MES 1 -->
+  <div class="month-section active" id="menu-month-1">
+    <div class="month-header">
+      <h2>Mes 1 — <span>Base &amp; Adaptación</span></h2>
+      <p>Platos familiares · ingredientes de rotación fácil</p>
+    </div>
+    <div class="week-grid">
+      <div class="day-card">
+        <div class="day-header y1">Día 1</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tostada integral (40 g) + huevo revuelto + aguacate (50 g)<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Salmón a la plancha (170 g) con setas salteadas y espárragos</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Gelatina proteica (100 g) + 10 almendras</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Calamares a la plancha (200 g) con salsa de perejil + lechuga y tomate</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y1">Día 2</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tortitas de avena (45 g harina + clara)<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Garbanzos salteados (175 g) con brócoli y panceta (35 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Merluza a la plancha (200 g) con judías verdes y zanahoria</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y1">Día 3</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Sándwich integral (60 g) con jamón cocido + queso havarti light<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Ensalada tibia: pollo (150 g), boniato (125 g), champiñones y cebolla</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Biscotes (27 g) + aguacate (50 g) + gelatina proteica</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Setas variadas a la plancha (250 g) + tortilla de champiñón y jamón</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y2">Día 4</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tortitas de avena + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Risotto de champiñón y sepia (arroz 70 g, sepia 120 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Brócoli al vapor + hamburguesa de pollo (110 g) a la plancha</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y2">Día 5</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Sándwich integral con jamón cocido y queso havarti<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Garbanzos con gambas (50 g) y champiñones</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Biscotes + aguacate + gelatina proteica</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Setas a la plancha (200 g) + tortilla de champiñón y jamón</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y3">Día 6</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tostada integral (40 g) + huevo revuelto + aguacate</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Brócoli al vapor con pollo teriyaki (125 g) y sésamo</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Gelatina proteica + 2 nueces</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Ensalada: lechuga, tomate, cebolla, atún rojo (150 g) y almendras</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y3">Día 7</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Bocadillo integral (70 g) + aguacate + jamón cocido<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Ensalada asiática de quinoa (60 g) y gambas (100 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Salmón al limón (170 g) con cebolla caramelizada</div></div>
+      </div>
+    </div>
+    <div class="tips-box">
+      <h3>💡 Notas Mes 1</h3>
+      <ul>
+        <li>Lista corta: aguacate, salmón, calamares, champiñones, garbanzos, brócoli, pollo, gambas, mandarina, uva, plátano.</li>
+        <li>Compra la quinoa y la sepia una sola vez para los días 4 y 7.</li>
+        <li>Las setas puedes comprarlas en bandeja grande y usar a lo largo de la semana.</li>
+        <li>Pesa el pan al inicio para ir cogiendo referencia visual.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MENÚ MES 2 -->
+  <div class="month-section" id="menu-month-2">
+    <div class="month-header">
+      <h2>Mes 2 — <span>Variedad &amp; Progresión</span></h2>
+      <p>Nuevas combinaciones · mismos ingredientes base</p>
+    </div>
+    <div class="week-grid">
+      <div class="day-card">
+        <div class="day-header y1">Día 1</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tostada integral (40 g) + huevo revuelto + aguacate (50 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Salmorejo (tomate 180 g, pan 30 g) con jamón serrano y huevo</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Calamares a la plancha (200 g) con setas salteadas</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y1">Día 2</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tortitas de avena (45 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Espaguetis integrales (60 g) + pollo (75 g) + verduras al wok</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Biscotes + aguacate + gelatina proteica</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Ensaladilla: patata (100 g), zanahoria, guisantes, huevo</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y1">Día 3</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Sándwich integral (60 g) con jamón cocido<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Parrillada: espárragos (150 g) + cebolla + merluza (200 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Gelatina proteica + 10 almendras</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Setas a la plancha (250 g) + calamares con jamón al ajillo</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y2">Día 4</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tortitas de avena + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Tallarines (80 g) con setas, gulas (75 g) y surimi</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Tortilla enrollada con gambas (60 g), espárragos y champiñones</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y2">Día 5</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Sándwich integral + queso havarti light<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Salteado de calamar (175 g) con brócoli, setas y patata</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Biscotes + aguacate + gelatina proteica</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Pizza fit en fajita integral: atún, cebolla, pimiento, mozzarella</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y3">Día 6</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tostada integral (40 g) + huevo revuelto + aguacate</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Setas en conserva salteadas + salmón con mostaza y miel (170 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Gelatina proteica + 2 nueces</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Hamburguesa de ternera (150 g) + judías verdes con ajo y limón</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y3">Día 7</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Bocadillo integral (70 g) + aguacate + jamón cocido<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Garbanzos salteados (175 g) con brócoli y panceta</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Salmón al limón con cebolla caramelizada (170 g)</div></div>
+      </div>
+    </div>
+    <div class="tips-box">
+      <h3>💡 Notas Mes 2</h3>
+      <ul>
+        <li>El salmorejo se puede preparar en cantidad y conservar 2 días en nevera.</li>
+        <li>Las setas en conserva son muy prácticas: compra 2 botes y dan para varios días.</li>
+        <li>Puedes intercambiar espaguetis integrales por tallarines integrales, misma cantidad.</li>
+        <li>El salmón con mostaza y miel se marina en 10 min: ideal para prepararlo rápido.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MENÚ MES 3 -->
+  <div class="month-section" id="menu-month-3">
+    <div class="month-header">
+      <h2>Mes 3 — <span>Consolidación &amp; Autonomía</span></h2>
+      <p>Mayor independencia del plan · hábitos afianzados</p>
+    </div>
+    <div class="week-grid">
+      <div class="day-card">
+        <div class="day-header y1">Día 1</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tostada integral (40 g) + huevo revuelto + aguacate (50 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Crema de calabaza, zanahoria y puerro + calamares a la plancha (200 g)</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Gelatina proteica (100 g) + 10 almendras</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Salmón a la plancha (170 g) con setas y verduras salteadas</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y1">Día 2</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tortitas de avena (45 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Ensalada garbanzos (175 g), huevo duro y queso fresco tipo Burgos</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Merluza al vapor (200 g) con espárragos a la plancha</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y1">Día 3</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Sándwich integral (60 g) + queso havarti light + jamón<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Macarrones (80 g) + pollo (100 g) + salsa de soja + brócoli vapor</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Biscotes (27 g) + aguacate + gelatina proteica</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Revuelto de espárragos verdes + setas a la plancha con cúrcuma</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y2">Día 4</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tortitas de avena + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Salteado de calamar (175 g) con brócoli, setas y patata</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Huevos rellenos fitness: huevo + atún al natural + mostaza</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y2">Día 5</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Sándwich integral con jamón cocido<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Garbanzos con gambas (100 g) y champiñones salteados</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Biscotes + aguacate + gelatina proteica</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Setas a la plancha (200 g) + tortilla francesa + pechuga de pavo</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y3">Día 6</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Uvas (100 g) + 5 avellanas</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Tostada integral (40 g) + huevo revuelto + aguacate</div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Brócoli al vapor con pollo teriyaki (125 g) y sésamo</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Gelatina proteica + 2 nueces</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Salmón al limón (170 g) con cebolla caramelizada</div></div>
+      </div>
+      <div class="day-card">
+        <div class="day-header y3">Día 7</div>
+        <div class="meal-row"><div class="meal-label">Desayuno</div><div class="meal-text">Plátano (125 g) + 1 nuez</div></div>
+        <div class="meal-row"><div class="meal-label">Tentempié</div><div class="meal-text">Bocadillo integral (70 g) + aguacate + jamón cocido<span>+ 1 mandarina</span></div></div>
+        <div class="meal-row"><div class="meal-label">Comida</div><div class="meal-text">Ensalada asiática de quinoa (60 g) y gambas (100 g) con lima y soja</div></div>
+        <div class="meal-row"><div class="meal-label">Merienda</div><div class="meal-text">Natillas proteicas (120 g) + 1 mandarina</div></div>
+        <div class="meal-row"><div class="meal-label">Cena</div><div class="meal-text">Calamares a la plancha (250 g) con setas y especias</div></div>
+      </div>
+    </div>
+    <div class="tips-box">
+      <h3>💡 Notas Mes 3</h3>
+      <ul>
+        <li>A estas alturas ya conoces las cantidades a ojo: empieza a reducir el uso de la báscula.</li>
+        <li>Ingredientes estrella: salmón, calamares, garbanzos, brócoli, champiñones, aguacate.</li>
+        <li>Compra semanal mínima: salmón, calamar, garbanzos, champiñones, brócoli, aguacate ×3, uva + plátano, mandarina.</li>
+        <li>Recuerda los 2 puntos críticos semanales: come sin restricción pero en cantidades reducidas.</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /main-menu -->
+
+
+<!-- ══════════════════════════════════ -->
+<!-- ══        SECCIÓN GYM           ══ -->
+<!-- ══════════════════════════════════ -->
+<div class="main-section" id="main-gym">
+
+  <div class="page-header">
+    <h1>Plan de Gym · 3 Meses</h1>
+    <p>Belén García Paniagua · Principiante real</p>
+    <div class="tag-row">
+      <span class="tag">💪 1–2 días / semana</span>
+      <span class="tag">⏱ 30–40 min</span>
+      <span class="tag">🍑 Caderas · Glúteos · Abdomen</span>
+      <span class="tag">🎯 −5 kg grasa</span>
+    </div>
+  </div>
+
+  <div class="objetivo-banner">
+    <div class="obj-item">📅 <span class="obj-label">&nbsp;Duración:</span><span class="obj-val">&nbsp;12 semanas</span></div>
+    <div class="obj-item">🔥 <span class="obj-label">&nbsp;Sesiones:</span><span class="obj-val">&nbsp;1–2/semana</span></div>
+    <div class="obj-item">⚖️ <span class="obj-label">&nbsp;Objetivo:</span><span class="obj-val">&nbsp;−5 kg grasa + tonificar</span></div>
+    <div class="obj-item">🤸 <span class="obj-label">&nbsp;Válido para:</span><span class="obj-val">&nbsp;Máquinas, mancuernas o solo cuerpo</span></div>
+  </div>
+
+  <!-- ══ GUÍA VISUAL DE MÁQUINAS ══ -->
+  <div class="machine-guide">
+    <button class="machine-guide-toggle" id="machineToggle" onclick="toggleMachines()">
+      <span>🏋️ Guía visual de máquinas — ¿Cómo reconocerlas en el gym?</span>
+      <span class="toggle-arrow">▼</span>
+    </button>
+    <div class="machine-grid" id="machineGrid">
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://www.lifefitness.com/content/dam/life-fitness/en-us/products/strength/insignia-series/seated-leg-press/INLP_H_detail_01.jpg" alt="Prensa de piernas" onerror="this.style.background='#fef7d6';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.innerHTML='🦵'">
+        <div class="machine-info">
+          <div class="machine-name">Prensa de piernas</div>
+          <div class="machine-desc">Asiento reclinable con una plataforma inclinada donde empujas con los pies. Suele ser grande y de color negro o gris.</div>
+          <span class="machine-used">Usada en: Sesión A mes 1</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/10/Seated-Hip-Abduction-Machine.gif" alt="Abducción cadera" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Máquina de abducción de cadera</div>
+          <div class="machine-desc">Te sientas con las piernas separadas y empujas hacia fuera. Tiene dos almohadillas que aprietan las rodillas por fuera. Trabaja las caderas.</div>
+          <span class="machine-used">Usada en: Sesión A todos los meses</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://www.lifefitness.com/content/dam/life-fitness/en-us/products/strength/insignia-series/chest-press/INB_H_detail_01.jpg" alt="Press de pecho" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Press de pecho (máquina)</div>
+          <div class="machine-desc">Asiento con dos manijas a los lados del pecho. Empujas hacia adelante. Trabaja el pecho y la parte delantera del hombro.</div>
+          <span class="machine-used">Usada en: Sesión B mes 1</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://cdn11.bigcommerce.com/s-8xnvh9k6/images/stencil/1280x1280/products/224/1050/bodysolid-lat-pulldown__92001.1614971773.jpg" alt="Jalón en polea" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Jalón en polea (lat pulldown)</div>
+          <div class="machine-desc">Una barra o agarre colgante desde arriba conectada a un cable. Te sientas y tiras hacia abajo. Trabaja la espalda. La polea tiene un soporte para las rodillas.</div>
+          <span class="machine-used">Usada en: Sesión B mes 1</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://m.media-amazon.com/images/I/71mYfpAqK3L._AC_SL1500_.jpg" alt="Remo en polea" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Remo en polea baja (cable row)</div>
+          <div class="machine-desc">Te sientas en un banco bajo, pies apoyados, y tiras de un cable hacia tu abdomen. La polea está a ras del suelo. Trabaja toda la espalda.</div>
+          <span class="machine-used">Usada en: Sesión B mes 2 y 3</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://m.media-amazon.com/images/I/61LLvkm0oIL._AC_SL1500_.jpg" alt="Smith machine" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Máquina Smith (barra guiada)</div>
+          <div class="machine-desc">Una barra horizontal que corre sobre dos raíles verticales. Se usa para sentadillas. La barra no puede caerse porque va guiada. Muy segura para principiantes.</div>
+          <span class="machine-used">Alternativa sentadilla mes 1</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://www.lifefitness.com/content/dam/life-fitness/en-us/products/cardio/activate-series/treadmill/LFTA_main_01.jpg" alt="Cinta de correr" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Cinta de correr</div>
+          <div class="machine-desc">La más reconocible. Banda móvil sobre la que caminas o corres. Tiene pantalla con velocidad e inclinación. La usas para el calentamiento.</div>
+          <span class="machine-used">Calentamiento todos los meses</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://m.media-amazon.com/images/I/61aJmm8HJBL._AC_SL1500_.jpg" alt="Bici estática" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Bicicleta estática</div>
+          <div class="machine-desc">Bici fija con pedales y sillín. Puedes ajustar la resistencia. Es la alternativa a la cinta para el calentamiento si la cinta está ocupada.</div>
+          <span class="machine-used">Calentamiento todos los meses</span>
+        </div>
+      </div>
+
+      <div class="machine-card">
+        <img class="machine-img" src="https://m.media-amazon.com/images/I/71UJtK5XOLL._AC_SL1500_.jpg" alt="Mancuernas" onerror="this.style.background='#fef7d6'">
+        <div class="machine-info">
+          <div class="machine-name">Mancuernas (pesas de mano)</div>
+          <div class="machine-desc">Pesas individuales que coges con una mano. Suelen estar en un soporte tipo escalera ordenadas por peso (de 1 kg a 30+ kg). Empieza con las más ligeras (3–5 kg).</div>
+          <span class="machine-used">Usadas en múltiples ejercicios</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="month-tabs">
+    <button class="tab-btn active" onclick="showTab('gym',1)">Mes 1</button>
+    <button class="tab-btn" onclick="showTab('gym',2)">Mes 2</button>
+    <button class="tab-btn" onclick="showTab('gym',3)">Mes 3</button>
+  </div>
+
+  <!-- GYM MES 1 -->
+  <div class="month-section active" id="gym-month-1">
+    <div class="month-header">
+      <h2>Mes 1 — <span>Aprender a Moverse</span></h2>
+      <p>Semanas 1–4 · Técnica, activación y primer contacto con el gym</p>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">1</div>
+      <div class="phase-info">
+        <h3>Fase: Activación y técnica</h3>
+        <p>El objetivo este mes NO es agotarte. Es aprender los movimientos, conectar con tu cuerpo y crear el hábito de ir. Con la dieta que ya sigues, el cuerpo ya empieza a perder grasa aunque el gym sea suave.</p>
+      </div>
+    </div>
+    <div class="week-sched">
+      <h4>Ejemplo de semana</h4>
+      <div class="day-pills">
+        <span class="day-pill rest">Lun · Descanso</span>
+        <span class="day-pill gym">Mar · Sesión A</span>
+        <span class="day-pill rest">Mié · Descanso</span>
+        <span class="day-pill rest">Jue · Descanso</span>
+        <span class="day-pill opt">Vie · Sesión B (opcional)</span>
+        <span class="day-pill rest">Sáb · Descanso</span>
+        <span class="day-pill rest">Dom · Descanso</span>
+      </div>
+    </div>
+    <div class="cardio-pill"><strong>Cardio de inicio (5 min):</strong> Camina en cinta a ritmo vivo o bicicleta estática suave. Sirve para calentar y ya quema algo. No lo saltes.</div>
+    <div class="progress-strip">
+      <div class="prog-item"><span class="pi-val">3×12</span><span class="pi-label">series × reps</span></div>
+      <div class="prog-item"><span class="pi-val">Bajo</span><span class="pi-label">Peso / dificultad</span></div>
+      <div class="prog-item"><span class="pi-val">60 s</span><span class="pi-label">Descanso</span></div>
+      <div class="prog-item"><span class="pi-val">∼35 min</span><span class="pi-label">Duración total</span></div>
+    </div>
+    <div class="sessions-grid">
+
+      <div class="session-card">
+        <div class="session-header sa">
+          <span class="s-title">Sesión A — Tren inferior + Core</span>
+          <span class="s-badge">Glúteos · Caderas · Abdomen</span>
+        </div>
+        <div class="session-body">
+          <div class="block-label">▶ Calentamiento (5 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🚶</div><div class="ex-info"><div class="ex-name">Cinta a paso vivo o bici suave</div><div class="ex-detail">5 minutos · sin agitarte</div></div></div>
+          <div class="block-label">▶ Bloque principal</div>
+          <div class="exercise-row" onclick="openModal('Sentadilla','https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg','3 series × 12 repeticiones · Peso muy ligero','Dobla las rodillas hasta que los muslos queden paralelos al suelo. La espalda siempre recta, el pecho hacia arriba y las rodillas sin sobrepasar la punta del pie.','Sin máquina: sentadilla con silla detrás para guiarte')">
+            <div class="ex-num">1</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg" alt="Sentadilla" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Sentadilla (Smith o goblet)</div><div class="ex-detail">3 × 12 · Peso muy ligero</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Prensa de piernas / Zancada','https://i.pinimg.com/originals/9e/5c/b1/9e5cb138b5e43df8374c5c1e1ac18b37.jpg','3 series × 12 repeticiones','En la prensa: pies a la altura de caderas, rodillas a 90°. Empuja lentamente. En la zancada: un pie adelante, baja la rodilla trasera hacia el suelo sin tocarlo.','Sin máquina: zancada estática en el sitio')">
+            <div class="ex-num">2</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/9e/5c/b1/9e5cb138b5e43df8374c5c1e1ac18b37.jpg" alt="Zancada" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Prensa de piernas o zancada</div><div class="ex-detail">3 × 12 · Rodillas a 90°</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Abducción de cadera','https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/10/Seated-Hip-Abduction-Machine.gif','3 series × 15 repeticiones','Siéntate en la máquina, ajusta el respaldo y la resistencia. Empuja las rodillas hacia afuera lentamente y vuelve con control. No uses inercia, el movimiento ha de ser controlado.','Sin máquina: elevaciones laterales de pierna tumbada en el suelo')">
+            <div class="ex-num">3</div>
+            <img class="ex-img" src="https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/10/Seated-Hip-Abduction-Machine.gif" alt="Abducción" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🍑</div>'">
+            <div class="ex-info"><div class="ex-name">Abducción de cadera (máquina)</div><div class="ex-detail">3 × 15 · Ideal para caderas externas</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Puente de glúteos','https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/09/Glute-Bridge.gif','3 series × 15 repeticiones','Tumbada boca arriba, pies apoyados cerca de los glúteos. Empuja las caderas hacia arriba apretando el glúteo. Aguanta 2 segundos arriba. Baja despacio.','Versión fácil: sin peso, solo peso corporal')">
+            <div class="ex-num">4</div>
+            <img class="ex-img" src="https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/09/Glute-Bridge.gif" alt="Puente de glúteos" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🍑</div>'">
+            <div class="ex-info"><div class="ex-name">Puente de glúteos</div><div class="ex-detail">3 × 15 · Aguanta 2 s arriba</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Plancha frontal','https://i.pinimg.com/originals/3c/05/e3/3c05e3ef1e70af19ecbcbcef2a5985c2.jpg','3 series × 20 segundos','Apoya los antebrazos y las puntas de los pies. El cuerpo en línea recta de cabeza a talones. Contrae el abdomen y los glúteos. No dejes que las caderas bajen ni suban.','Sobre rodillas si no aguantas en punta de pies')">
+            <div class="ex-num">5</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/3c/05/e3/3c05e3ef1e70af19ecbcbcef2a5985c2.jpg" alt="Plancha" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🧘</div>'">
+            <div class="ex-info"><div class="ex-name">Plancha frontal</div><div class="ex-detail">3 × 20 segundos · Core profundo</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="block-label">▶ Vuelta a la calma (3–5 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🧘</div><div class="ex-info"><div class="ex-name">Estiramiento cuádriceps + glúteos</div><div class="ex-detail">30 s cada lado · sin rebotar</div></div></div>
+        </div>
+      </div>
+
+      <div class="session-card">
+        <div class="session-header sb">
+          <span class="s-title">Sesión B — Tren superior + Core</span>
+          <span class="s-badge">Espalda · Brazos · Abdomen</span>
+        </div>
+        <div class="session-body">
+          <div class="block-label">▶ Calentamiento (5 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🚶</div><div class="ex-info"><div class="ex-name">Cinta a paso vivo o bici suave</div><div class="ex-detail">5 minutos</div></div></div>
+          <div class="block-label">▶ Bloque principal</div>
+          <div class="exercise-row" onclick="openModal('Remo con mancuerna','https://i.pinimg.com/originals/6b/2b/8d/6b2b8d6d4c3f3b1e2e4d8e7d6e8d3e4d.jpg','3 series × 12 repeticiones','Apoya una rodilla y una mano en un banco. Con la otra mano sujeta la mancuerna. Tira del codo hacia arriba pegado al cuerpo. La espalda siempre recta y paralela al suelo.','Sin banco: puedes hacerlo de pie, inclinada hacia adelante')">
+            <div class="ex-num">1</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/45/c0/b6/45c0b6de6e6e6e6e6e6e6e6e6e6e6e6e.jpg" alt="Remo" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>💪</div>'">
+            <div class="ex-info"><div class="ex-name">Remo en polea o con mancuerna</div><div class="ex-detail">3 × 12 · Espalda recta, codo hacia atrás</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Press de pecho en máquina','https://i.pinimg.com/originals/4a/8b/5c/4a8b5c3d2e1f9a8b7c6d5e4f3a2b1c0d.jpg','3 series × 12 repeticiones','Ajusta el asiento para que las manijas queden a la altura del pecho. Empuja hacia adelante sin bloquear los codos al final. Vuelve lentamente.','Sin máquina: flexiones apoyadas en la pared o sobre las rodillas')">
+            <div class="ex-num">2</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/4a/8b/5c/4a8b5c3d2e1f9a8b7c6d5e4f3a2b1c0d.jpg" alt="Press pecho" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>💪</div>'">
+            <div class="ex-info"><div class="ex-name">Press de pecho en máquina</div><div class="ex-detail">3 × 12 · Codos a 45°</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Curl de bíceps','https://i.pinimg.com/originals/1a/2b/3c/1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d.jpg','3 series × 12 repeticiones','De pie, con una mancuerna en cada mano. Dobla el codo trayendo la mancuerna hacia el hombro. El codo pegado al cuerpo en todo momento. Baja lentamente.','Mancuerna ligera (3–5 kg) o una botella de 1,5 L de agua')">
+            <div class="ex-num">3</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/1a/2b/3c/1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d.jpg" alt="Curl bíceps" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>💪</div>'">
+            <div class="ex-info"><div class="ex-name">Curl de bíceps con mancuernas</div><div class="ex-detail">3 × 12 · Mancuerna ligera (3–5 kg)</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Dead Bug (abdomen profundo)','https://i.pinimg.com/originals/de/ad/bu/deadbug1.jpg','3 series × 10 repeticiones alternadas · Muy lento','Tumbada boca arriba, brazos extendidos al techo, rodillas a 90°. Baja simultáneamente el brazo derecho y la pierna izquierda hacia el suelo sin tocar. Vuelve al centro y cambia de lado. La espalda baja siempre pegada al suelo.','Es más difícil de lo que parece. Ve despacio y respira.')">
+            <div class="ex-num">4</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/de/ad/bu/deadbug1.jpg" alt="Dead Bug" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🧘</div>'">
+            <div class="ex-info"><div class="ex-name">Dead Bug (abdomen profundo)</div><div class="ex-detail">3 × 10 reps · Muy lento</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="block-label">▶ Vuelta a la calma</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🧘</div><div class="ex-info"><div class="ex-name">Estiramiento espalda y hombros</div><div class="ex-detail">30 s cada ejercicio</div></div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tips-box">
+      <h3>💡 Claves del Mes 1</h3>
+      <ul>
+        <li>El primer mes es solo para adaptarte. No importa el peso que uses, importa ejecutar bien el movimiento.</li>
+        <li>Las agujetas las primeras semanas son normales. No son lesión, pasarán en 2–3 días.</li>
+        <li>Si solo puedes ir 1 día: haz la Sesión A (tren inferior), ahí están tus zonas objetivo.</li>
+        <li>Come proteína en las 2 horas siguientes al gym (tu gelatina proteica, pavo o huevo).</li>
+        <li>Meta del mes: ir las sesiones pactadas SIN FALTA. Eso ya es un éxito enorme.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GYM MES 2 -->
+  <div class="month-section" id="gym-month-2">
+    <div class="month-header">
+      <h2>Mes 2 — <span>Subir la Intensidad</span></h2>
+      <p>Semanas 5–8 · Más peso, más reps, primeros resultados visibles</p>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">2</div>
+      <div class="phase-info">
+        <h3>Fase: Progresión y quema activa</h3>
+        <p>Aquí es donde empieza a notarse. Aumentas el peso, añades una serie y el cardio se vuelve más intenso. El cuerpo ya está adaptado y ahora responde. Deberías sentir las sesiones más exigentes pero manejables.</p>
+      </div>
+    </div>
+    <div class="week-sched">
+      <h4>Ejemplo de semana</h4>
+      <div class="day-pills">
+        <span class="day-pill gym">Lun · Sesión A</span>
+        <span class="day-pill rest">Mar · Descanso</span>
+        <span class="day-pill rest">Mié · Descanso</span>
+        <span class="day-pill gym">Jue · Sesión B</span>
+        <span class="day-pill rest">Vie · Descanso</span>
+        <span class="day-pill opt">Sáb · Paseo 30 min (opcional)</span>
+        <span class="day-pill rest">Dom · Descanso</span>
+      </div>
+    </div>
+    <div class="cardio-pill"><strong>Cardio de inicio (8 min):</strong> Cinta a 5–5,5 km/h con inclinación 2–3%, o bici a ritmo moderado. Tienes que notar que te activas de verdad.</div>
+    <div class="progress-strip">
+      <div class="prog-item"><span class="pi-val">4×12</span><span class="pi-label">series × reps</span></div>
+      <div class="prog-item"><span class="pi-val">Medio</span><span class="pi-label">Peso / dificultad</span></div>
+      <div class="prog-item"><span class="pi-val">45 s</span><span class="pi-label">Descanso</span></div>
+      <div class="prog-item"><span class="pi-val">∼40 min</span><span class="pi-label">Duración total</span></div>
+    </div>
+    <div class="sessions-grid">
+
+      <div class="session-card">
+        <div class="session-header sa">
+          <span class="s-title">Sesión A — Tren inferior + Core</span>
+          <span class="s-badge">Progresión mes 2</span>
+        </div>
+        <div class="session-body">
+          <div class="block-label">▶ Calentamiento (8 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🚴</div><div class="ex-info"><div class="ex-name">Cinta con inclinación o bici moderada</div><div class="ex-detail">8 min · hasta sudar ligeramente</div></div></div>
+          <div class="block-label">▶ Bloque principal</div>
+          <div class="exercise-row" onclick="openModal('Sentadilla con peso','https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg','4 series × 12 repeticiones · Aumenta el peso del mes 1','Misma técnica que el mes 1 pero con algo más de carga. Si no tienes barra, usa dos mancuernas a los lados. Baja lento (2 s), sube explosivo.','Sin peso: sentadilla con pausa de 2 s en el punto bajo')">
+            <div class="ex-num">1</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg" alt="Sentadilla" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Sentadilla con peso</div><div class="ex-detail">4 × 12 · Sube el peso respecto al mes 1</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Zancada dinámica','https://i.pinimg.com/originals/9e/5c/b1/9e5cb138b5e43df8374c5c1e1ac18b37.jpg','4 series × 10 repeticiones cada pierna','Da un paso adelante y baja la rodilla trasera hacia el suelo sin tocar. Empuja con el pie delantero para volver. Alterna piernas. Con mancuernas en las manos para más intensidad.','Si pierdes el equilibrio: zancada estática sin moverte')">
+            <div class="ex-num">2</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/9e/5c/b1/9e5cb138b5e43df8374c5c1e1ac18b37.jpg" alt="Zancada" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Zancada dinámica alternada</div><div class="ex-detail">4 × 10 cada pierna · Con o sin mancuernas</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Abducción de cadera (más resistencia)','https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/10/Seated-Hip-Abduction-Machine.gif','4 series × 15 repeticiones · Sube un punto de resistencia','Igual que el mes 1 pero con un punto más de resistencia. El control sigue siendo la clave: abre lento y cierra más lento todavía.','Con banda elástica alrededor de las rodillas si no hay máquina')">
+            <div class="ex-num">3</div>
+            <img class="ex-img" src="https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/10/Seated-Hip-Abduction-Machine.gif" alt="Abducción" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🍑</div>'">
+            <div class="ex-info"><div class="ex-name">Abducción de cadera (más resistencia)</div><div class="ex-detail">4 × 15 · Sube un punto de resistencia</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Puente de glúteos con pausa','https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/09/Glute-Bridge.gif','4 series × 15 · Aguanta 3 s arriba apretando el glúteo','Igual que el mes 1 pero con una pausa de 3 segundos en lo más alto apretando con fuerza el glúteo. Puedes añadir una mancuerna sobre las caderas para más intensidad.','Versión más fácil: sin mancuerna, solo pausa')">
+            <div class="ex-num">4</div>
+            <img class="ex-img" src="https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/09/Glute-Bridge.gif" alt="Puente glúteos" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🍑</div>'">
+            <div class="ex-info"><div class="ex-name">Puente de glúteos con pausa</div><div class="ex-detail">4 × 15 · 3 s arriba apretando el glúteo</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Plancha lateral','https://i.pinimg.com/originals/3c/05/e3/3c05e3ef1e70af19ecbcbcef2a5985c2.jpg','3 series × 20 segundos cada lado','Apoya el antebrazo y el borde externo del pie. El cuerpo en línea recta. Activa el oblicuo levantando las caderas. No dejes que caigan. Si no aguantas, apoya la rodilla de abajo.','Activa la cadera lateral, zona difícil de trabajar')">
+            <div class="ex-num">5</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/3c/05/e3/3c05e3ef1e70af19ecbcbcef2a5985c2.jpg" alt="Plancha lateral" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🧘</div>'">
+            <div class="ex-info"><div class="ex-name">Plancha lateral</div><div class="ex-detail">3 × 20 s cada lado · Oblicuo y cadera</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="block-label">▶ Vuelta a la calma (5 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🧘</div><div class="ex-info"><div class="ex-name">Estiramiento completo: paloma, cuádriceps, isquios</div><div class="ex-detail">1 min cada lado · respira profundo</div></div></div>
+        </div>
+      </div>
+
+      <div class="session-card">
+        <div class="session-header sb">
+          <span class="s-title">Sesión B — Cuerpo completo</span>
+          <span class="s-badge">Full body + quema</span>
+        </div>
+        <div class="session-body">
+          <div class="block-label">▶ Calentamiento (8 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🚴</div><div class="ex-info"><div class="ex-name">Bici moderada o cinta con inclinación</div><div class="ex-detail">8 minutos</div></div></div>
+          <div class="block-label">▶ Circuito (45 s descanso entre ejercicios)</div>
+          <div class="exercise-row" onclick="openModal('Sentadilla + press de hombros','https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg','4 series × 12 repeticiones','Baja en sentadilla y cuando subas, empuja las mancuernas hacia arriba al mismo tiempo. Es un movimiento combinado que trabaja más músculos y quema más calorías.','Empieza con mancuernas muy ligeras (3 kg)')">
+            <div class="ex-num">1</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg" alt="Squat press" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>💪</div>'">
+            <div class="ex-info"><div class="ex-name">Sentadilla + press de hombros</div><div class="ex-detail">4 × 12 · Mancuernas ligeras</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Remo en máquina','https://i.pinimg.com/originals/45/c0/b6/45c0b6de6e6e6e6e6e6e6e6e6e6e6e6e.jpg','4 series × 12 repeticiones','Siéntate en la máquina de remo, agarra las asas y tira hacia ti doblando los codos. La espalda siempre recta, no te inclines hacia atrás.','Sin máquina: remo con mancuerna en banco')">
+            <div class="ex-num">2</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/45/c0/b6/45c0b6de6e6e6e6e6e6e6e6e6e6e6e6e.jpg" alt="Remo" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>💪</div>'">
+            <div class="ex-info"><div class="ex-name">Remo en máquina o mancuerna</div><div class="ex-detail">4 × 12 · Espalda recta</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Mountain Climbers (lentos)','https://i.pinimg.com/originals/mc/li/mb/mclimber1.jpg','3 series × 20 repeticiones (10 cada pierna)','En posición de plancha alta (manos en el suelo). Lleva una rodilla al pecho lentamente y vuelve. Alterna piernas. Mantén el abdomen apretado en todo momento. La espalda recta.','Es cardio + abdomen al mismo tiempo')">
+            <div class="ex-num">3</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/mc/li/mb/mclimber1.jpg" alt="Mountain climbers" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🧗</div>'">
+            <div class="ex-info"><div class="ex-name">Mountain climbers lentos</div><div class="ex-detail">3 × 20 reps · Core + cardio suave</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="block-label">▶ Vuelta a la calma</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🧘</div><div class="ex-info"><div class="ex-name">Estiramiento global 5 minutos</div><div class="ex-detail">Espalda, hombros, cadera</div></div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tips-box">
+      <h3>💡 Claves del Mes 2</h3>
+      <ul>
+        <li>Regla del peso: si las últimas 2 reps las haces sin esfuerzo, sube el peso. Si no puedes completar las series, bájalo.</li>
+        <li>En este mes deberías notar la ropa más suelta, especialmente en cintura y caderas.</li>
+        <li>Un paseo de 30 min rápido el fin de semana suma mucho sin que lo sientas como gym.</li>
+        <li>Motivación: hazte una foto de perfil al inicio del mes. Al final compara. Los cambios en fotos se ven antes que en la báscula.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GYM MES 3 -->
+  <div class="month-section" id="gym-month-3">
+    <div class="month-header">
+      <h2>Mes 3 — <span>Resultados y Consolidación</span></h2>
+      <p>Semanas 9–12 · Tonificación, resistencia y hábito afianzado</p>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">3</div>
+      <div class="phase-info">
+        <h3>Fase: Tonificación y mantenimiento</h3>
+        <p>Ya tienes técnica y base. Ahora el objetivo es afianzar los cambios y seguir progresando. Las sesiones son más completas, el cardio dura un poco más y ya empiezas a pensar en qué quieres mantener a largo plazo.</p>
+      </div>
+    </div>
+    <div class="week-sched">
+      <h4>Ejemplo de semana</h4>
+      <div class="day-pills">
+        <span class="day-pill gym">Mar · Sesión A</span>
+        <span class="day-pill rest">Mié · Descanso</span>
+        <span class="day-pill opt">Jue · Paseo 30 min</span>
+        <span class="day-pill gym">Vie · Sesión B</span>
+        <span class="day-pill rest">Sáb · Descanso</span>
+        <span class="day-pill rest">Dom · Descanso</span>
+      </div>
+    </div>
+    <div class="cardio-pill"><strong>Cardio de inicio (10 min):</strong> Cinta a 5,5–6 km/h con inclinación 3–4%, o bici a ritmo que te cueste mantener conversación. Empiezas a sudar antes de los 5 minutos.</div>
+    <div class="progress-strip">
+      <div class="prog-item"><span class="pi-val">4×15</span><span class="pi-label">series × reps</span></div>
+      <div class="prog-item"><span class="pi-val">Medio-alto</span><span class="pi-label">Peso / dificultad</span></div>
+      <div class="prog-item"><span class="pi-val">40 s</span><span class="pi-label">Descanso</span></div>
+      <div class="prog-item"><span class="pi-val">∼40 min</span><span class="pi-label">Duración total</span></div>
+    </div>
+    <div class="sessions-grid">
+
+      <div class="session-card">
+        <div class="session-header sa">
+          <span class="s-title">Sesión A — Tren inferior intenso</span>
+          <span class="s-badge">Glúteos · Caderas · Muslos</span>
+        </div>
+        <div class="session-body">
+          <div class="block-label">▶ Calentamiento (10 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🏃</div><div class="ex-info"><div class="ex-name">Cinta con inclinación intensa</div><div class="ex-detail">10 min a ritmo vivo · sudas antes de empezar</div></div></div>
+          <div class="block-label">▶ Bloque principal</div>
+          <div class="exercise-row" onclick="openModal('Sentadilla profunda','https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg','4 series × 15 repeticiones','Baja hasta que los muslos queden paralelos al suelo o un poco más. La profundidad activa más el glúteo. Mantén el pecho arriba y las rodillas en línea con los dedos del pie.','Con más peso que el mes 2')">
+            <div class="ex-num">1</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg" alt="Sentadilla profunda" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Sentadilla profunda con peso</div><div class="ex-detail">4 × 15 · Muslo paralelo al suelo</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Peso muerto rumano con mancuernas','https://i.pinimg.com/originals/rd/l1/ft/rdl1ft.jpg','4 series × 12 repeticiones · NUEVO ejercicio - pide ayuda al monitor','De pie, mancuernas delante de los muslos. Empuja las caderas hacia atrás deslizando las mancuernas por las piernas hasta sentir tensión en la parte trasera del muslo. Vuelve apretando el glúteo. Espalda SIEMPRE recta.','⚠️ Pide 5 min al monitor del gym antes de hacerlo la primera vez')">
+            <div class="ex-num">2</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/rd/l1/ft/rdl1ft.jpg" alt="Peso muerto rumano" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🏋️</div>'">
+            <div class="ex-info"><div class="ex-name">Peso muerto rumano (mancuernas)</div><div class="ex-detail">4 × 12 · Isquios + glúteo · Espalda recta siempre</div><div class="ex-alt">⚠️ Pide ayuda al monitor la primera vez</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Puente de glúteos con mancuerna','https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/09/Glute-Bridge.gif','4 series × 15 · 3 segundos arriba apretando al máximo','Igual que antes pero con una mancuerna apoyada sobre las caderas (sujétala con las manos). Pausa de 3 s en lo alto apretando el glúteo con toda la fuerza. Baja muy despacio.','El ejercicio más efectivo para glúteo')">
+            <div class="ex-num">3</div>
+            <img class="ex-img" src="https://i0.wp.com/www.simplyfitnesspro.com/wp-content/uploads/2020/09/Glute-Bridge.gif" alt="Puente glúteos" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🍑</div>'">
+            <div class="ex-info"><div class="ex-name">Puente de glúteos con mancuerna</div><div class="ex-detail">4 × 15 · Mancuerna en caderas · 3 s arriba</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Russian Twist con mancuerna','https://i.pinimg.com/originals/rt/tw/is/rttwist.jpg','3 series × 20 repeticiones (10 cada lado)','Sentada en el suelo, rodillas ligeramente dobladas y espalda inclinada 45°. Sujeta una mancuerna ligera y gira el torso de lado a lado. El movimiento sale de la cintura, no de los brazos.','Trabaja los oblicuos: afina la cintura')">
+            <div class="ex-num">4</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/rt/tw/is/rttwist.jpg" alt="Russian twist" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🔄</div>'">
+            <div class="ex-info"><div class="ex-name">Russian Twist con mancuerna</div><div class="ex-detail">3 × 20 reps · Oblicuos y cintura</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="block-label">▶ Vuelta a la calma (5 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🧘</div><div class="ex-info"><div class="ex-name">Postura de paloma + estiramiento isquios</div><div class="ex-detail">1 min cada lado · respira profundo</div></div></div>
+        </div>
+      </div>
+
+      <div class="session-card">
+        <div class="session-header sb">
+          <span class="s-title">Sesión B — Full body + cardio final</span>
+          <span class="s-badge">Tonificación total</span>
+        </div>
+        <div class="session-body">
+          <div class="block-label">▶ Calentamiento (10 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🚴</div><div class="ex-info"><div class="ex-name">Bici a ritmo moderado-intenso</div><div class="ex-detail">10 minutos</div></div></div>
+          <div class="block-label">▶ Circuito completo</div>
+          <div class="exercise-row" onclick="openModal('Sentadilla sumo','https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg','4 series × 15 repeticiones','Pies más abiertos que en la sentadilla normal, puntas hacia afuera. Baja manteniendo la espalda recta. Esta variante trabaja más la cara interna del muslo y los glúteos.','Con mancuerna colgando entre las piernas')">
+            <div class="ex-num">1</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/e1/0b/f4/e10bf46abf5c54e07adaed47513a0e07.jpg" alt="Sentadilla sumo" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Sentadilla sumo</div><div class="ex-detail">4 × 15 · Cara interna del muslo</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Zancada lateral','https://i.pinimg.com/originals/9e/5c/b1/9e5cb138b5e43df8374c5c1e1ac18b37.jpg','3 series × 10 repeticiones cada lado','De pie, da un gran paso hacia un lado. Dobla la rodilla de ese lado y baja el peso. La otra pierna se mantiene recta. Empuja para volver al centro. Movimiento lento y controlado.','Trabaja aductores (cara interna) y glúteo lateral')">
+            <div class="ex-num">2</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/9e/5c/b1/9e5cb138b5e43df8374c5c1e1ac18b37.jpg" alt="Zancada lateral" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🦵</div>'">
+            <div class="ex-info"><div class="ex-name">Zancada lateral</div><div class="ex-detail">3 × 10 cada lado · Movimiento lento</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Press de hombros con mancuernas','https://i.pinimg.com/originals/1a/2b/3c/1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d.jpg','3 series × 12 repeticiones','De pie o sentada, mancuernas a la altura de los hombros. Empuja hacia arriba hasta estirar los brazos sin bloquear los codos. Baja lentamente.','Trabaja hombros y parte alta de la espalda')">
+            <div class="ex-num">3</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/1a/2b/3c/1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d.jpg" alt="Press hombros" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>💪</div>'">
+            <div class="ex-info"><div class="ex-name">Press de hombros con mancuernas</div><div class="ex-detail">3 × 12 · De pie o sentada</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="exercise-row" onclick="openModal('Russian Twist con mancuerna','https://i.pinimg.com/originals/rt/tw/is/rttwist.jpg','3 series × 20 repeticiones','Sentada a 45°, mancuerna en manos, gira de lado a lado. Oblicuos a tope.','Notarás quemazón en los laterales del abdomen: eso es buena señal')">
+            <div class="ex-num">4</div>
+            <img class="ex-img" src="https://i.pinimg.com/originals/rt/tw/is/rttwist.jpg" alt="Russian twist" onerror="this.outerHTML='<div class=\'ex-img-placeholder\'>🔄</div>'">
+            <div class="ex-info"><div class="ex-name">Russian Twist</div><div class="ex-detail">3 × 20 · Cintura y oblicuos</div><div class="ex-alt">👆 Toca para ver cómo se hace</div></div>
+          </div>
+          <div class="block-label">▶ Cardio final quema grasa (5 min)</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🏃</div><div class="ex-info"><div class="ex-name">Cinta o bici a ritmo alto · 5 minutos</div><div class="ex-detail">Termina fuerte: el cuerpo caliente quema más grasa</div></div></div>
+          <div class="block-label">▶ Vuelta a la calma</div>
+          <div class="exercise-row"><div class="ex-num">—</div><div class="ex-img-placeholder">🧘</div><div class="ex-info"><div class="ex-name">Estiramiento global 5 minutos</div><div class="ex-detail">Todo el cuerpo · respira y disfruta</div></div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tips-box">
+      <h3>💡 Claves del Mes 3</h3>
+      <ul>
+        <li>El peso muerto rumano es el ejercicio más potente para glúteos e isquios. Pide 5 minutos al monitor para que te lo enseñe.</li>
+        <li>Mide tu progreso con cinta métrica en cintura y cadera: la báscula no lo cuenta todo.</li>
+        <li>Si has llegado aquí, ya tienes el hábito. El mes 3 es para afianzar, no para sufrir.</li>
+        <li>Combinado con tu plan de alimentación: en 3 meses deberías haber perdido entre 3 y 5 kg de grasa real con caderas y abdomen notablemente más definidos.</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /main-gym -->
+
+<script>
+  // ── NAVIGATION ──
+  function showMain(id) {
+    document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.main-nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('main-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // ── TABS ──
+  function showTab(section, n) {
+    const prefix = section + '-month-';
+    document.querySelectorAll('[id^="' + prefix + '"]').forEach(s => s.classList.remove('active'));
+    document.getElementById(prefix + n).classList.add('active');
+    const tabs = document.querySelectorAll('#main-' + section + ' .tab-btn');
+    tabs.forEach(b => b.classList.remove('active'));
+    tabs[n - 1].classList.add('active');
+  }
+
+  // ── MACHINE GUIDE TOGGLE ──
+  function toggleMachines() {
+    const grid = document.getElementById('machineGrid');
+    const btn  = document.getElementById('machineToggle');
+    grid.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
+  // ── MODAL ──
+  function openModal(name, imgSrc, sets, desc, alt) {
+    document.getElementById('modalTitle').textContent = name;
+    const img = document.getElementById('modalImg');
+    img.src = imgSrc;
+    img.style.display = 'block';
+    document.getElementById('modalSets').textContent = sets;
+    document.getElementById('modalDesc').textContent = desc;
+    const altEl = document.getElementById('modalAlt');
+    if (alt) {
+      altEl.style.display = 'block';
+      altEl.innerHTML = '<strong>💡 Alternativa sin máquina:</strong> ' + alt;
+    } else {
+      altEl.style.display = 'none';
+    }
+    document.getElementById('exModal').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (!e || e.target === document.getElementById('exModal') || e.target.classList.contains('modal-close')) {
+      document.getElementById('exModal').classList.remove('open');
+    }
+  }
+</script>
+</body>
+</html>
